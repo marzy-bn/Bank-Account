@@ -7,6 +7,7 @@ class BankAccount:
         self.name = acctName
         print(f"\nAccount '{self.name}' created. \n Balance = ${self.balance:.2f}")
     
+    
     def getBalance(self):
         print(f"\nAccount '{self.name}' Balance = ${self.balance:.2f}")
     
