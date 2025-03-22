@@ -1,45 +1,28 @@
-class BalanceException(Exception):
-    pass
-
 class BankAccount:
-    def __init__(self, initialAmount, acctName):
-        self.balance = initialAmount
-        self.name = acctName
-        print(f"\nAccount '{self.name}' created. \n Balance = ${self.balance:.2f}")
     
+    def __init__(self, name, balance):
+        self.name = name
+        self.__balance = balance
     
-    def getBalance(self):
-        print(f"\nAccount '{self.name}' Balance = ${self.balance:.2f}")
-    
-    def deposit(self,amount):
-        self.balance = self.balance + amount
-        print("\nDeposit complete.")
-        self.getBalance()
-    
-    def viableTransaction(self, amount):
-        if self.balance >= amount:
-            return 
-        else:
-            raise BalanceException(f"\nSorry, account '{self.name}' only has a balance of ${self.balance:.2f}")
-    
+    def deposit(self, amount):
+        self.__balance += amount
+
+
     def withdraw(self, amount):
-        try:
-            self.viableTransaction(amount)
-            self.balance = self.balance - amount
-            print("\n Withdraw complete.")
-            self.getBalance()
-        except BalanceException as error:
-            print(f'\nWithdraw interrupted: {error}')
-    
-    def transfer(self, amount, account):
-        try:
-            print('\n***********\n\nBeginning Transfer..  ')
-            self.viableTransaction(amount)
-            self.withdraw(amount)
-            account.deposit(amount)
-            print('\nTransfer complete! \n***********')
-        except BalanceException as error:
-            print(f'\nTranfer interrupted. {error}')
+        if amount < self.__balance:
+            self.__balance -= amount
+        else:
+            print('Insufficient balance')
 
-
+    def get_balance(self):
+        return self.__balance
     
+num = BankAccount('Tom',10000)
+num.deposit(1000)
+print(num.get_balance())
+num.withdraw(20000)
+print(num.get_balance())
+print(num.__dict__)
+num.name = 'Steve'
+print(num.__dict__)
+print(num.get_balance())
